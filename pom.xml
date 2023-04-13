@@ -7,26 +7,31 @@
 
 
     <groupId>org.example</groupId>
-    <artifactId>untitled1</artifactId>
+    <artifactId>E5RHAPP</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
         <dependencies>
             <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.27</version>
-            </dependency>
-            <dependency>
                 <groupId>javax.swing</groupId>
                 <artifactId>swing</artifactId>
                 <version>1.0.0</version>
+
             </dependency>
         </dependencies>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.32</version>
+
+        </dependency>
+
+    </dependencies>
 
 
 </project>

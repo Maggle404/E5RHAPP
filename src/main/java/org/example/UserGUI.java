@@ -28,7 +28,9 @@ public class UserGUI extends JFrame {
                 String email = rs.getString("email");
                 int age = rs.getInt("age");
                 String job = rs.getString("job");
+                //
                 Object[] rowData = new Object[]{id, name, lastname, email, age, job};
+                //
                 tableModel.addRow(rowData);
             }
         }
@@ -71,8 +73,9 @@ public class UserGUI extends JFrame {
             {
                 userDAO.createUser(user);
                 Object[] rowData = new Object[]{user.getId(), name, lastname, email, age, job};
+                // LE BUG EST ICI PATCHE LE
                 tableModel.addRow(rowData);
-                tableModel.fireTableDataChanged(); // Refresh the table
+                tableModel.fireTableDataChanged();
             }
             catch (SQLException ex)
             {

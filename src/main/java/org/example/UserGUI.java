@@ -1,7 +1,10 @@
 package org.example;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -13,9 +16,31 @@ public class UserGUI extends JFrame {
 
     public UserGUI()
     {
-        super("User Interface");
+        super("Tableau des utilisateurs (triple clic pour trier)");
         userDAO = new UserDAO();
-        tableModel = new DefaultTableModel(new String[]{"ID", "Name", "Lastname", "Email", "Age", "Job"}, 0);
+        tableModel = new DefaultTableModel(new String[]{"ID", "Name", "Lastname", "Email", "Age", "Job"}, 0) {
+            /*CODE POUR FORCER LES VALEURS ID ET AGE EN INT PARCE QUE LE CODE LES
+            PRENDS POUR DES STRINGS ET JE NE SAIS PAS POURQUOI*/
+
+            /*UPDATE: DefaultTableModel définit toutes les variables en String juste au-dessus.
+            * on va toucher a rien pour éviter de tout casser.*/
+            @Override
+            public Class<?> getColumnClass(int columnIndex)
+            {
+                if (columnIndex == 0)
+                {
+                    return Integer.class;
+                }
+                else if (columnIndex == 4)
+                {
+                    return Integer.class;
+                }
+                else
+                {
+                    return super.getColumnClass(columnIndex);
+                }
+            }
+        };
         table = new JTable(tableModel);
         try
         {
@@ -29,7 +54,7 @@ public class UserGUI extends JFrame {
                 int age = rs.getInt("age");
                 String job = rs.getString("job");
                 //
-                Object[] rowData = new Object[]{id, name, lastname, email, age, job};
+                Object[] rowData = new Object[] {id, name, lastname, email, age, job};
                 //
                 tableModel.addRow(rowData);
             }
@@ -42,7 +67,20 @@ public class UserGUI extends JFrame {
 
         /*Sorting algorithm*/
 
-        
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
+        table.setRowSorter(sorter);
+        // Mouse listener for ID column header
+        table.getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 1)
+                {
+                    int columnIndex = table.columnAtPoint(e.getPoint());
+                    sorter.toggleSortOrder(columnIndex);
+                }
+            }
+        });
 
         /*DELETE BUTTON*/
 

@@ -40,6 +40,12 @@ public class UserGUI extends JFrame {
         }
         JScrollPane scrollPane = new JScrollPane(table);
 
+        /*Sorting algorithm*/
+
+        
+
+        /*DELETE BUTTON*/
+
         JButton deleteButton = new JButton("Delete User");
         deleteButton.addActionListener(e ->
         {
@@ -58,6 +64,8 @@ public class UserGUI extends JFrame {
                 }
             }
         });
+
+        /*CREATE BUTTON*/
 
         JButton createButton = new JButton("Create User");
         createButton.addActionListener(e ->
@@ -84,7 +92,8 @@ public class UserGUI extends JFrame {
         });
 
 
-            /*try
+            /*OLD METHOD FOR DATA SORT. KEEP IN CASE OF EMERGENCY
+            try
             {
                 userDAO.createUser(user);
                 ResultSet rs = userDAO.getAllUsers();
